@@ -1,0 +1,43 @@
+#header h1 {
+    color: darkblue;
+    text-align: center;
+    margin: 0;
+    font-size: 40px;
+}
+#header p {
+    color: darkblue;
+    text-align: center;
+    margin: 0;
+}
+#urlbox {
+    margin: auto;
+    width: 50%;
+    border: 2px solid darkgray;
+    border-radius: 0.5em;
+    box-shadow: 0 1px 4px #ccc;
+    margin-top: 24px;
+}
+#urlbox h1 {
+    color: darkblue;
+    text-align: center;
+}
+.form {
+    display: table;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 12px;
+}
+.input {
+    display: table-cell;
+}
+.input input {
+    padding: 12px;
+    width: 300px;
+}
+.button {
+    display: table-cell;
+}
+.button input, button {
+    padding: 12px;
+    background-color: lightblue;
+}

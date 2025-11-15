@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>URL Shortener</title>
+</head>
+<body>
+    <header id="header">
+        <h1>Welcome to the URL Shortener!</h1>
+        <p>By Artur Belotserkovskiy</p>
+    </header>
+    <main>
+        <section id="urlbox">
+            <h1>Paste the long URL to shorten it</h1>
+            <form method="post">
+                <div class="form">
+                    <div class="input">
+                        <input type="text" id="long_url" name="long_url" placeholder="Enter link here" required />
+                    </div>
+                    <div class="button">
+                        <input type="submit" value="Shorten URL!">
+                    </div>
+                </div>
+                {% if original_url %}
+                    <div class="form">
+                        <div class="input">
+                            <input type="text" value="{{ host }}:{{ port }}/{{ short_url }}" id="clipboard">
+                        </div>
+                        <div class="button">
+                            <button type="button" onclick="copyToClipboard()">Copy to clipboard</button>
+                        </div>
+                        <script>
+                        function copyToClipboard() {
+                            const text = document.getElementById("clipboard").value;
+                            navigator.clipboard.writeText(text).catch(err => console.error("Copy failed:", err));
+                        }
+                        </script>
+                    </div>
+                {% endif %}
+            </form>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <p style="color: red; text-align: center;">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </section>
+    </main>
+</body>
+</html>
