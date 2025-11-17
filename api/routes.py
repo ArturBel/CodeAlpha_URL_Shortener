@@ -1,6 +1,6 @@
 from flask import Blueprint, request, render_template, redirect, flash
 from api.models import Urls
-from api.extensions import db
+from api.extensions import db, limiter
 from api.config import HOST, PORT
 import random
 import string
@@ -8,6 +8,7 @@ import validators
 
 
 shorten_bp = Blueprint('shortener', __name__, template_folder='templates', static_folder='static')
+redirecter = Blueprint('redirecter', __name__, template_folder='templates', static_folder='static')
 
 
 # index page
@@ -48,7 +49,7 @@ def index():
 
 
 # redirect page
-@shorten_bp.route('/<short_url>', methods=['GET'])
+@redirecter.route('/<short_url>', methods=['GET'])
 def short_redirect(short_url: str):
     url = Urls.query.filter_by(short_url=short_url).first_or_404()
     return redirect(f'{url.original_url}')

@@ -1,7 +1,7 @@
 from flask import Flask
 from api.config import Config
-from api.extensions import db, migrate
-from api.routes import shorten_bp
+from api.extensions import db, migrate, limiter
+from api.routes import shorten_bp, redirecter
 from api.models import Urls
 
 
@@ -13,9 +13,15 @@ def create_app():
     # initializing extensions
     db.init_app(app=app)
     migrate.init_app(app=app, db=db)
+    limiter.init_app(app=app)
 
     # registering blueprints
     app.register_blueprint(shorten_bp)
+    app.register_blueprint(redirecter)
+
+    # applying limiter
+    limiter.limit(("5/minute", "20/hour"), methods=['POST'])(shorten_bp)
+    limiter.exempt(redirecter)
 
     # setting up health endpoint
     @app.route('/health')

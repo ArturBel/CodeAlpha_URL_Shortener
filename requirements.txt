@@ -4,3 +4,5 @@ Flask-SQLAlchemy
 Flask-Migrate
 psycopg2-binary
 validators
+Flask-Limiter
+redis
